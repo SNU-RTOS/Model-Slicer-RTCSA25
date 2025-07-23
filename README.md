@@ -15,7 +15,7 @@ DNNPipe Github Repository: https://github.com/SNU-RTOS/DNNPipe
 ## System Requirements
 
 - Rubikpi (Debian 13)
-- Python 3.10.6
+- Python 3.10.16
 - TensorFlow 2.12.0
 
 ## Usage
