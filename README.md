@@ -19,14 +19,14 @@ DNNPipe Github Repository: https://github.com/SNU-RTOS/DNNPipe
 - TensorFlow 2.12.0
 
 ## Usage
-The model downloader (`model_download.py`) : Downloads a pretrained DNN model (ResNet50) for inference
+**The model downloader (`model_download.py`)** : Downloads a pretrained DNN model (ResNet50) for inference
   - Function: Loads the ResNet50 model with pretrained ImageNet weights and saves it in `.h5` format.
   - Output: `resnet50.h5` – Keras H5 format model file (used as input to the slicer)  
   ```bash
   python model_downloader.py 
   ```
 
-The model partitioner (`model_slicer.py`) : Interactively slices a given DNN model into multiple sub-models based on user-defined layer indices
+**The model partitioner (`model_slicer.py`)** : Interactively slices a given DNN model into multiple sub-models based on user-defined layer indices
   - Input: DNN model in `.h5` format (e.g., `resnet50.h5`)
   - Output: Skiced sub-models in `.tflite` formats
   ```bash
