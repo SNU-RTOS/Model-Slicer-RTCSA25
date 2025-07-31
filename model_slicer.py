@@ -7,7 +7,6 @@ Filename: model_slicer.py
 @Contact: thkim@redwood.snu.ac.kr
 
 @Description: Model slicer for RTCSA25 tutorial
-
 """
 import tensorflow as tf
 import numpy as np
@@ -81,12 +80,13 @@ def DNNPartitioning(model, start, end, prev_outputs):
         inbound_node = layer._inbound_nodes[0]
         inbound_layers = inbound_node.inbound_layers
 
-        # Handle case where the layer has multiple inputs
+        # Multiple inboune layers
         if isinstance(inbound_layers, list) and len(inbound_layers) > 1:
             for inbound_layer in inbound_layers:
                 source_layer = model.get_layer(inbound_layer.name)  
                 source_idx = model.layers.index(source_layer)
-
+                
+                # If inbound layer is not the immediately previous layer
                 if source_idx != i - 1:
                     if source_layer.name in reused_tensors:
                         try:
@@ -100,8 +100,8 @@ def DNNPartitioning(model, start, end, prev_outputs):
                         current_tensor = layer([current_tensor, stage_inputs[source_layer.name]])
                     else:
                         current_tensor = layer(current_tensor)
+        # Single inbound layer
         else:
-            # Single input layer case
             try:
                 source_layer = model.get_layer(inbound_node.inbound_layers.name)
                 current_tensor = layer(reused_tensors[source_layer.name])
@@ -245,7 +245,8 @@ def main():
     # Create a sample dummy input tensor for the first submodel
     sample_input = create_sample_input()
     num_stages = len(partitioning_points) - 1
-    
+
+    # Lists to store intermediate submodels and their corresponding TFLite models
     sub_models = []
     tflite_models = []
 
